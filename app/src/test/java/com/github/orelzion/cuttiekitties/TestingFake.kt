@@ -31,7 +31,7 @@ class CatDaoFake : CatImagesDao {
     override fun getAllBreeds(): DataSource.Factory<Int, Breed> {
         return object : DataSource.Factory<Int, Breed>() {
             override fun create(): LimitOffsetDataSource<Breed> {
-                return MockLimitDataSource(breedsLiveData.value!!)
+                return MockLimitDataSource(breedsLiveData.value ?: emptyList())
             }
         }
     }

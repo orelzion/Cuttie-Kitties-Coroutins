@@ -19,9 +19,13 @@ class CatRepositoryTest {
 
     @Test
     fun `refresh breeds from network and save to local DB`() = runBlockingTest {
+        // Given
         repository = CatRepository(CatApiFake(), CatDaoFake())
 
+        // When
         repository.refreshBreeds()
+
+        // Then
         repository.getBreedListLiveData(this)
             .test()
             .assertHasValue()
@@ -30,6 +34,7 @@ class CatRepositoryTest {
 
     @Test
     fun `refresh images list by breed id and save to local DB`() = runBlockingTest {
+        //Given
         val fakeLocalBreed =
             com.github.orelzion.cuttiekitties.model.local.entity.Breed(name = "name", id = "1")
         val fakeNetworkBreed = Breed(name = "name", id = "1")
@@ -40,7 +45,10 @@ class CatRepositoryTest {
             CatDaoFake()
         )
 
+        // When
         repository.refreshCatImages(fakeLocalBreed)
+
+        // Then
         repository.observeImagesList(fakeLocalBreed)
             .test()
             .assertHasValue()
